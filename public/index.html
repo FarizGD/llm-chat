@@ -1,197 +1,159 @@
-<!doctype html>
-<html lang="en" class="h-full dark">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>FarizDev-AI</title>
-		<!-- Tailwind CSS CDN -->
-		<script src="https://cdn.tailwindcss.com"></script>
-		<script>
-			tailwind.config = {
-				darkMode: "class",
-				theme: {
-					extend: {
-						colors: {
-							border: "hsl(var(--border))",
-							input: "hsl(var(--input))",
-							ring: "hsl(var(--ring))",
-							background: "hsl(var(--background))",
-							foreground: "hsl(var(--foreground))",
-							primary: {
-								DEFAULT: "hsl(var(--primary))",
-								foreground: "hsl(var(--primary-foreground))",
-							},
-							secondary: {
-								DEFAULT: "hsl(var(--secondary))",
-								foreground: "hsl(var(--secondary-foreground))",
-							},
-							muted: {
-								DEFAULT: "hsl(var(--muted))",
-								foreground: "hsl(var(--muted-foreground))",
-							},
-							accent: {
-								DEFAULT: "hsl(var(--accent))",
-								foreground: "hsl(var(--accent-foreground))",
-							},
-							card: {
-								DEFAULT: "hsl(var(--card))",
-								foreground: "hsl(var(--card-foreground))",
-							},
-						},
-					},
-				},
-			};
-		</script>
-		<style>
-			@layer base {
-				:root {
-					--background: 0 0% 100%;
-					--foreground: 240 10% 3.9%;
-					--card: 0 0% 100%;
-					--card-foreground: 240 10% 3.9%;
-					--primary: 24 95% 53%;
-					--primary-foreground: 0 0% 98%;
-					--secondary: 240 4.8% 95.9%;
-					--secondary-foreground: 240 5.9% 10%;
-					--muted: 240 4.8% 95.9%;
-					--muted-foreground: 240 3.8% 46.1%;
-					--accent: 240 4.8% 95.9%;
-					--accent-foreground: 240 5.9% 10%;
-					--border: 240 5.9% 90%;
-					--input: 240 5.9% 90%;
-					--ring: 24 95% 53%;
-				}
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fariz | Assistant Interface</title>
 
-				.dark {
-					--background: 240 10% 3.9%;
-					--foreground: 0 0% 98%;
-					--card: 240 10% 3.9%;
-					--card-foreground: 0 0% 98%;
-					--primary: 24 95% 53%;
-					--primary-foreground: 0 0% 98%;
-					--secondary: 240 3.7% 15.9%;
-					--secondary-foreground: 0 0% 98%;
-					--muted: 240 3.7% 15.9%;
-					--muted-foreground: 240 5% 64.9%;
-					--accent: 240 3.7% 15.9%;
-					--accent-foreground: 0 0% 98%;
-					--border: 240 3.7% 15.9%;
-					--input: 240 3.7% 15.9%;
-					--ring: 24 95% 53%;
-				}
-			}
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Marked.js for Auto-Formatting Markdown -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
-			::-webkit-scrollbar {
-				width: 6px;
-			}
-			::-webkit-scrollbar-track {
-				background: transparent;
-			}
-			::-webkit-scrollbar-thumb {
-				background: hsl(var(--border));
-				border-radius: 9999px;
-			}
-		</style>
-	</head>
-	<body class="h-full bg-background text-foreground antialiased selection:bg-primary/20 selection:text-primary">
-		<div class="flex h-full overflow-hidden">
-			<!-- Sidebar -->
-			<aside id="sidebar" class="hidden md:flex w-64 flex-col border-r border-border bg-card/50 p-3 transition-all">
-				<div class="flex items-center justify-between pb-3 border-b border-border">
-					<button id="new-chat-btn" class="flex w-full items-center gap-2 rounded-lg border border-border bg-background px-3 py-2 text-sm font-medium hover:bg-accent transition">
-						<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-						New Session
-					</button>
-				</div>
-				<div class="flex-1 overflow-y-auto py-3 space-y-1">
-					<div class="px-2 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Seminar Ledger</div>
-					<a href="#" class="flex items-center gap-2 rounded-lg px-2 py-1.5 text-sm text-foreground hover:bg-accent truncate">
-						<svg class="w-4 h-4 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
-						Work Log
-					</a>
-				</div>
-				<div class="border-t border-border pt-3">
-					<div class="flex items-center gap-3 px-2 py-1.5 text-xs text-muted-foreground">
-						<div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
-						Fariz | Millennium Seminar
-					</div>
-				</div>
-			</aside>
+  <style>
+    @layer base {
+      :root {
+        --background: 0 0% 100%;
+        --foreground: 240 10% 3.9%;
+        --card: 0 0% 100%;
+        --card-foreground: 240 10% 3.9%;
+        --primary: 187 100% 45%; /* Bright Blue-Cyan */
+        --primary-foreground: 240 10% 3.9%;
+        --secondary: 240 4.8% 95.9%;
+        --secondary-foreground: 240 5.9% 10%;
+        --muted: 240 4.8% 95.9%;
+        --muted-foreground: 240 3.8% 46.1%;
+        --accent: 240 4.8% 95.9%;
+        --accent-foreground: 240 5.9% 10%;
+        --border: 240 5.9% 90%;
+        --input: 240 5.9% 90%;
+        --ring: 187 100% 45%;
+      }
 
-			<!-- Main Chat Container -->
-			<main class="flex flex-1 flex-col h-full relative">
-				<!-- Header -->
-				<header class="flex h-14 items-center justify-between border-b border-border px-4 bg-card/30 backdrop-blur-md">
-					<div class="flex items-center gap-3">
-						<button id="toggle-sidebar" class="rounded-lg p-1.5 hover:bg-accent md:hidden">
-							<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
-						</button>
-						<div class="flex items-center gap-2">
-							<span class="flex h-7 w-7 items-center justify-center rounded-lg bg-primary text-primary-foreground font-bold text-xs">F</span>
-							<h1 class="text-sm font-semibold">Fariz</h1>
-						</div>
-					</div>
-					<button id="theme-toggle" class="rounded-lg p-2 text-muted-foreground hover:bg-accent hover:text-foreground">
-						<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
-					</button>
-				</header>
+      .dark {
+        --background: 240 10% 3.9%;
+        --foreground: 0 0% 98%;
+        --card: 240 10% 3.9%;
+        --card-foreground: 0 0% 98%;
+        --primary: 187 100% 50%; /* Vibrant Cyan Accent */
+        --primary-foreground: 240 10% 3.9%;
+        --secondary: 240 3.7% 15.9%;
+        --secondary-foreground: 0 0% 98%;
+        --muted: 240 3.7% 15.9%;
+        --muted-foreground: 240 5% 64.9%;
+        --accent: 240 3.7% 15.9%;
+        --accent-foreground: 0 0% 98%;
+        --border: 240 3.7% 15.9%;
+        --input: 240 3.7% 15.9%;
+        --ring: 187 100% 50%;
+      }
+    }
 
-				<!-- Messages Area -->
-				<div id="chat-messages" class="flex-1 overflow-y-auto p-4 space-y-6 max-w-3xl w-full mx-auto">
-					<!-- Customized Character Greeting -->
-					<div class="flex gap-4 message assistant-message">
-						<div class="flex h-8 w-8 shrink-0 select-none items-center justify-center rounded-md border border-border bg-card text-primary font-medium text-xs shadow-sm">
-							⚡
-						</div>
-						<div class="flex-1 space-y-2 overflow-hidden">
-							<div class="text-xs font-semibold text-muted-foreground">Fariz</div>
-							<div class="prose dark:prose-invert text-sm leading-relaxed text-foreground">
-								Ah, you're here. Good. I just finished going over the latest budget allocation for Seminar. What do you need help with? Code reviews, calculations, or planning? Make sure you have your thoughts organized before we start.
-							</div>
-						</div>
-					</div>
-				</div>
+    /* Custom scrollbar styling */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: hsl(var(--border));
+      border-radius: 3px;
+    }
 
-				<!-- Typing Indicator -->
-				<div id="typing-indicator" class="hidden max-w-3xl w-full mx-auto px-4 pb-2">
-					<div class="flex items-center gap-2 text-xs text-muted-foreground">
-						<div class="flex space-x-1">
-							<div class="w-1.5 h-1.5 bg-primary rounded-full animate-bounce" style="animation-delay: 0ms"></div>
-							<div class="w-1.5 h-1.5 bg-primary rounded-full animate-bounce" style="animation-delay: 150ms"></div>
-							<div class="w-1.5 h-1.5 bg-primary rounded-full animate-bounce" style="animation-delay: 300ms"></div>
-						</div>
-						Fariz is calculating...
-					</div>
-				</div>
+    /* Target background and text colors using defined HSL vars */
+    body {
+      background-color: hsl(var(--background));
+      color: hsl(var(--foreground));
+    }
+    
+    .bg-primary { background-color: hsl(var(--primary)); }
+    .text-primary { color: hsl(var(--primary)); }
+    .text-primary-foreground { color: hsl(var(--primary-foreground)); }
+    .bg-card { background-color: hsl(var(--card)); }
+    .border-border { border-color: hsl(var(--border)); }
+    .bg-secondary { background-color: hsl(var(--secondary)); }
+    .text-secondary-foreground { color: hsl(var(--secondary-foreground)); }
+    .text-muted-foreground { color: hsl(var(--muted-foreground)); }
 
-				<!-- Input Area -->
-				<div class="p-4 bg-gradient-to-t from-background via-background/80 to-transparent">
-					<div class="max-w-3xl mx-auto">
-						<div class="relative flex items-center rounded-xl border border-border bg-card shadow-lg focus-within:ring-2 focus-within:ring-ring transition-all">
-							<textarea
-								id="user-input"
-								placeholder="Ask Fariz anything..."
-								rows="1"
-								class="w-full resize-none bg-transparent px-4 py-3.5 text-sm placeholder:text-muted-foreground focus:outline-none max-h-36 min-h-[48px]"
-								autofocus
-							></textarea>
-							<button
-								id="send-button"
-								class="mr-2 inline-flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition"
-							>
-								<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M12 5l7 7-7 7"/>
-								</svg>
-							</button>
-						</div>
-						<p class="mt-2 text-center text-xs text-muted-foreground">
-							Millennium Science School &bull; Seminar Treasury Division
-						</p>
-					</div>
-				</div>
-			</main>
-		</div>
+    /* Markdown Styling inside Messages */
+    .message-content p { margin-bottom: 0.75rem; }
+    .message-content p:last-child { margin-bottom: 0; }
+    .message-content ul { list-style-type: disc; padding-left: 1.25rem; margin-bottom: 0.75rem; }
+    .message-content ol { list-style-type: decimal; padding-left: 1.25rem; margin-bottom: 0.75rem; }
+    .message-content li { margin-bottom: 0.25rem; }
+    .message-content strong { font-weight: 600; color: hsl(var(--foreground)); }
+    .message-content code {
+      background-color: hsl(var(--muted));
+      padding: 0.2rem 0.4rem;
+      border-radius: 0.25rem;
+      font-size: 0.85em;
+      font-family: monospace;
+    }
+    .message-content pre {
+      background-color: hsl(var(--secondary));
+      padding: 0.75rem;
+      border-radius: 0.5rem;
+      overflow-x: auto;
+      margin-top: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+  </style>
+</head>
+<body class="flex h-screen flex-col font-sans antialiased">
 
-		<script src="chat.js"></script>
-	</body>
+  <!-- Header -->
+  <header class="flex h-14 items-center justify-between border-b border-border px-6">
+    <div class="flex items-center gap-2">
+      <div class="h-3 w-3 rounded-full bg-primary"></div>
+      <h1 class="font-semibold text-sm tracking-wide">Fariz Workspace</h1>
+    </div>
+    <button id="theme-toggle" class="rounded-md border border-border px-3 py-1 text-xs text-muted-foreground transition-colors hover:bg-secondary">
+      Toggle Theme
+    </button>
+  </header>
+
+  <!-- Chat Messages Container -->
+  <main id="chat-messages" class="flex-1 overflow-y-auto p-6 space-y-6">
+    <!-- Initial Greeting -->
+    <div class="flex gap-4 message assistant-message">
+      <div class="flex h-8 w-8 shrink-0 select-none items-center justify-center rounded-md border border-border bg-card text-primary font-medium text-xs shadow-sm">⚡</div>
+      <div class="flex-1 space-y-2 overflow-hidden">
+        <div class="text-xs font-semibold text-muted-foreground">Fariz</div>
+        <div class="message-content text-sm leading-relaxed text-foreground">
+          Ah, you're here. Good. I just finished going over the latest budget allocation for Seminar. What do you need help with? Code reviews, calculations, or planning? Make sure you have your thoughts organized before we start.
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Typing Indicator -->
+  <div id="typing-indicator" class="hidden px-6 py-2 text-xs text-muted-foreground italic">
+    Fariz is writing...
+  </div>
+
+  <!-- Footer Input Controls -->
+  <footer class="border-t border-border p-4">
+    <div class="mx-auto flex max-w-3xl items-end gap-2 rounded-xl border border-border bg-card p-2 shadow-sm focus-within:ring-1 focus-within:ring-primary">
+      <textarea
+        id="user-input"
+        rows="1"
+        placeholder="Type a message..."
+        class="flex-1 resize-none bg-transparent px-2 py-1 text-sm text-foreground outline-none placeholder:text-muted-foreground max-h-36"
+      ></textarea>
+      <button
+        id="send-button"
+        class="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground transition-opacity hover:opacity-90 disabled:opacity-50"
+      >
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9-7-9-7-9 7 9 7zm0 0v-8" />
+        </svg>
+      </button>
+    </div>
+  </footer>
+
+  <!-- External Script -->
+  <script src="chat.js"></script>
+</body>
 </html>
