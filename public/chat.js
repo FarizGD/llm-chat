@@ -85,6 +85,14 @@ let chatHistory = [
 ];
 let isProcessing = false;
 
+// Configure Marked options
+if (window.marked) {
+	marked.setOptions({
+		gfm: true,
+		breaks: true
+	});
+}
+
 // Dark/Light Theme Toggle
 themeToggle.addEventListener("click", () => {
 	document.documentElement.classList.toggle("dark");
@@ -138,7 +146,6 @@ async function sendMessage() {
 
 		chatMessages.scrollTop = chatMessages.scrollHeight;
 
-		// Inject System Prompt at position 0 when sending to payload
 		const fullPayloadMessages = [
 			{ role: "system", content: SYSTEM_PROMPT },
 			...chatHistory
@@ -160,7 +167,7 @@ async function sendMessage() {
 		let buffer = "";
 
 		const flushAssistantText = () => {
-			assistantTextEl.textContent = responseText;
+			assistantTextEl.innerHTML = renderMarkdown(responseText);
 			chatMessages.scrollTop = chatMessages.scrollHeight;
 		};
 
@@ -236,7 +243,7 @@ function addMessageToChat(role, content) {
 			<div class="flex-1 space-y-2 overflow-hidden text-right">
 				<div class="text-xs font-semibold text-muted-foreground">You</div>
 				<div class="inline-block text-left rounded-2xl bg-primary px-4 py-2.5 text-sm text-primary-foreground leading-relaxed shadow-sm">
-					${escapeHtml(content)}
+					${renderMarkdown(content)}
 				</div>
 			</div>
 		`;
@@ -246,7 +253,7 @@ function addMessageToChat(role, content) {
 			<div class="flex-1 space-y-2 overflow-hidden">
 				<div class="text-xs font-semibold text-muted-foreground">Fariz</div>
 				<div class="prose dark:prose-invert text-sm leading-relaxed text-foreground">
-					${escapeHtml(content)}
+					${renderMarkdown(content)}
 				</div>
 			</div>
 		`;
@@ -256,7 +263,10 @@ function addMessageToChat(role, content) {
 	chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 
-function escapeHtml(str) {
+function renderMarkdown(str) {
+	if (window.marked) {
+		return window.marked.parse(str);
+	}
 	return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
